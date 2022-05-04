@@ -1,0 +1,21 @@
+name: CDK Synth Example for Snyk IaC
+on: [push, pull_request]
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '/home/runner/work/juice-shop/classic-load-balancer'
+    steps:
+      - name: install aws-cdk, run the build and convert cdk to json output
+        run: |
+            npm install -g aws-cdk
+            npm install
+            npm run build
+            cdk synth
+      - name: Run Snyk to check CDK output for iac issues
+        uses: snyk/actions/iac@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          file: cdk.out/LoadBalancerStack.template.json
