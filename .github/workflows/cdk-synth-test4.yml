@@ -7,7 +7,7 @@ jobs:
       - name: install aws-cdk
         run: npm install -g aws-cdk
       - name: setup working directory and run commands
-        working-directory: ./classic-load-balancer
+        working-directory: /classic-load-balancer
         run: |
             npm install
             npm run build
