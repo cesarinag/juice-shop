@@ -3,12 +3,13 @@ on: [push, pull_request]
 jobs:
   security:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./classic-load-balancer
     steps:
-      - name: install aws-cdk
-        run: npm install -g aws-cdk
-      - name: setup working directory and run commands
-        working-directory: /classic-load-balancer
+      - name: install aws-cdk, run the build and convert cdk to json output
         run: |
+            npm install -g aws-cdk
             npm install
             npm run build
             cdk synth
